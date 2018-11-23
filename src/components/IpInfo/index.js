@@ -9,7 +9,7 @@ class InputInfo extends Component {
         <table>
           <tbody>
             <tr>
-              <th colspan="2">
+              <th colSpan="2">
                 <h3>Информация о ip-адресе</h3>
               </th>
               </tr>        

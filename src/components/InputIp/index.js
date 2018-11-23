@@ -20,11 +20,11 @@ const InputWrapper = styled.div`
 
 class InputIp extends Component {
   render() {
-    const { ipAddress, validateIp, sendRequest } = this.props;
+    const { ipAddress, validateIp, sendInputIp } = this.props;
     return (
       <InputWrapper>
         <input type="text" placeholder="Введите ip-адрес" value={ipAddress} onChange={(e)=>validateIp(e)}/>
-        <button onClick={()=>sendRequest()}>проверить</button>
+        <button onClick={()=>sendInputIp()}>проверить</button>
       </InputWrapper>
     );
   }

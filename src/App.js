@@ -3,6 +3,8 @@ import Header from './components/Header';
 import InputIp from './components/InputIp';
 import InputInfo from './components/IpInfo';
 import { AppWrapper, OptionsWrapper } from './Styled';
+import { ipRegex } from './utils/regex';
+import { ipRequest } from './utils/network';
 
 class App extends Component {
   constructor() {
@@ -15,6 +17,7 @@ class App extends Component {
         region_rus: "Калифорния",
         zip_code: "94043",
       },
+      error: null,
     };
   }
 
@@ -33,17 +36,26 @@ class App extends Component {
     });
   };
 
-  sendRequest = () => {
-    fetch(
-      `https://api.2ip.ua/geo.json?ip=8.8.8.8`,
-    )
-      .then(response => {
-        if (response.status !== 200) {
-          return;
-        }
-        return response;
-      })
-      .then(response => response.json().then(ipInfo => this.setState({ipInfo})));
+  sendRequest = (ipAddress) => {
+    const ipForRequst = ipAddress? ipAddress : '';
+    ipRequest(ipForRequst)
+      .then(response => 
+        response.json().then(ipInfo => this.setState({ ipInfo }))
+      );
+  };
+
+  sendInputIp = () => {
+    if (ipRegex.test(this.state.ipAddress)) {  
+      this.sendRequest(this.state.ipAddress);
+    } else {
+      this.setState({
+        error: 'Введите корректный ip-адресс'
+      });
+    }
+  };
+
+  sendEmptyIp = () => {
+    this.sendRequest();
   };
 
   render() {
@@ -52,8 +64,8 @@ class App extends Component {
       <AppWrapper>
         <Header />
         <OptionsWrapper>
-          <InputIp sendRequest={this.sendRequest} ipAddress={ipAddress} validateIp={this.validateIp}/>
-          <button>проверить свой ip</button>
+          <InputIp sendInputIp={this.sendInputIp} ipAddress={ipAddress} validateIp={this.validateIp}/>
+          <button onClick={()=>this.sendEmptyIp()}>проверить свой ip</button>
         </OptionsWrapper>
         {ipInfo && <InputInfo ipInfo={ipInfo}/>}
       </AppWrapper>
