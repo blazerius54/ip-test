@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './components/Header';
 import InputIp from './components/InputIp';
 import InputInfo from './components/IpInfo';
-import { AppWrapper, OptionsWrapper } from './Styled';
+import { AppWrapper, OptionsWrapper, Error } from './Styled';
 import { ipRegex } from './utils/regex';
 import { ipRequest } from './utils/network';
 
@@ -11,13 +11,21 @@ class App extends Component {
     super();
     this.state = {
       ipAddress: '',
-      ipInfo: {
-        city_rus: "Маунтин-Вью",
-        country_rus: "США",
-        region_rus: "Калифорния",
-        zip_code: "94043",
-      },
+      ipInfo: null,
       error: null,
+    };
+  }
+
+  componentDidMount() {
+    if(localStorage.getItem('ip')) {
+      this.setState({
+        ipAddress: localStorage.getItem('ip'),
+      });
+    };
+    if(localStorage.getItem('ipInfo')) {
+      this.setState({
+        ipInfo: JSON.parse(localStorage.getItem('ipInfo')),
+      });
     };
   }
 
@@ -38,18 +46,27 @@ class App extends Component {
 
   sendRequest = (ipAddress) => {
     const ipForRequst = ipAddress? ipAddress : '';
+    localStorage.setItem('ip', this.state.ipAddress);
     ipRequest(ipForRequst)
       .then(response => 
-        response.json().then(ipInfo => this.setState({ ipInfo }))
-      );
+        response.json().then(ipInfo => {
+          this.setState({ ipInfo });
+          localStorage.setItem('ipInfo', JSON.stringify(ipInfo));
+        })
+      ).catch(error => this.setState({
+        error: 'Достигнут лимит запросов, попробуйте позже',
+      }));
   };
 
   sendInputIp = () => {
     if (ipRegex.test(this.state.ipAddress)) {  
       this.sendRequest(this.state.ipAddress);
+      this.setState({
+        error: null,
+      });
     } else {
       this.setState({
-        error: 'Введите корректный ip-адресс'
+        error: 'Введите корректный ip-адресс',
       });
     }
   };
@@ -59,7 +76,7 @@ class App extends Component {
   };
 
   render() {
-    const { ipAddress, ipInfo } = this.state;
+    const { ipAddress, ipInfo, error } = this.state;
     return (
       <AppWrapper>
         <Header />
@@ -67,6 +84,7 @@ class App extends Component {
           <InputIp sendInputIp={this.sendInputIp} ipAddress={ipAddress} validateIp={this.validateIp}/>
           <button onClick={()=>this.sendEmptyIp()}>проверить свой ip</button>
         </OptionsWrapper>
+        {error && <Error>{error}</Error>}
         {ipInfo && <InputInfo ipInfo={ipInfo}/>}
       </AppWrapper>
     );

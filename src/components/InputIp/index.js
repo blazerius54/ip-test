@@ -15,6 +15,14 @@ const InputWrapper = styled.div`
 
   button {
     background-color: #ebf442;
+
+    &:hover {
+      background-color: #e5ea88;
+    }
+
+    &:active {
+      background-color: #bcc157;
+    }
   }
 `;
 
