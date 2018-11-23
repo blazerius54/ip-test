@@ -38,7 +38,6 @@ class App extends Component {
   };
 
   setIpAddress = ipAddress => {
-    console.log(ipAddress);
     this.setState({
       ipAddress,
     });
