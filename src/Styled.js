@@ -10,11 +10,19 @@ export const AppWrapper = styled.div`
   height: 100%;
   color: #555;
   font-family: Arial, Helvetica, sans-serif;
-
+  width: 90%;
+  margin: 50px auto;
+  border-radius: 10px;
+  background: #f1f1f1;
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75);
+  padding-bottom: 30px;
+  overflow: hidden;
   button {
     padding: 10px;
     border: none;
-
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    
     &:focus {
       outline: none;
     }

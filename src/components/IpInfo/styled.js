@@ -12,9 +12,6 @@ export const InfoWrapper = styled.div`
     border-collapse: collapse;
     margin: 10px 0;
     border: 4px solid #999;
-    -webkit-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.75);
   
       th {
         padding: 5px 20px;
@@ -40,8 +37,8 @@ export const InfoWrapper = styled.div`
         border-bottom: 1px solid #999;
       }
 
-      tr:nth-child(odd) {
-        background: #f2f2f2;
+      tr:nth-child(even) {
+        background: #ffffff;
       }
 
       tr:hover {
