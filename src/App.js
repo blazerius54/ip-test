@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './components/Header';
 import InputIp from './components/InputIp';
 import InputInfo from './components/IpInfo';
-import { AppWrapper, OptionsWrapper, Error } from './Styled';
+import { AppWrapper, OptionsWrapper, Error } from './styled';
 import { ipRegex } from './utils/regex';
 import { ipRequest } from './utils/network';
 
@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       ipAddress: '',
       ipInfo: null,
-      error: null,
+      errorMsg: null,
     };
   }
 
@@ -53,7 +53,7 @@ class App extends Component {
           localStorage.setItem('ipInfo', JSON.stringify(ipInfo));
         })
       ).catch(error => this.setState({
-        error: 'Достигнут лимит запросов, попробуйте позже',
+        errorMsg: 'Достигнут лимит запросов, попробуйте позже',
       }));
   };
 
@@ -61,11 +61,11 @@ class App extends Component {
     if (ipRegex.test(this.state.ipAddress)) {  
       this.sendRequest(this.state.ipAddress);
       this.setState({
-        error: null,
+        errorMsg: null,
       });
     } else {
       this.setState({
-        error: 'Введите корректный ip-адресс',
+        errorMsg: 'Введите корректный ip-адресс',
       });
     }
   };
@@ -75,7 +75,7 @@ class App extends Component {
   };
 
   render() {
-    const { ipAddress, ipInfo, error } = this.state;
+    const { ipAddress, ipInfo, errorMsg } = this.state;
     return (
       <AppWrapper>
         <Header />
@@ -83,7 +83,7 @@ class App extends Component {
           <InputIp sendInputIp={this.sendInputIp} ipAddress={ipAddress} validateIp={this.validateIp}/>
           <button onClick={()=>this.sendEmptyIp()}>проверить свой ip</button>
         </OptionsWrapper>
-        {error && <Error>{error}</Error>}
+        {errorMsg && <Error>{errorMsg}</Error>}
         {ipInfo && <InputInfo ipInfo={ipInfo}/>}
       </AppWrapper>
     );

@@ -6,11 +6,10 @@ export const AppWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 60%;
   height: 100%;
   color: #555;
   font-family: Arial, Helvetica, sans-serif;
-  width: 90%;
   margin: 50px auto;
   border-radius: 10px;
   background: #f1f1f1;
@@ -38,12 +37,12 @@ export const AppWrapper = styled.div`
 export const OptionsWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  width: 60%;
+  width: 80%;
   margin-top: 50px;
   justify-content: space-between;
 
   & > button {
-    flex-basis: 30%;
+    flex-basis: 40%;
     background-color: #7babed;
 
     &:hover {

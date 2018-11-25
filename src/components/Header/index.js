@@ -19,6 +19,7 @@ const Title = styled.header`
   background-size:100% 2px ;
 `;
 
+/* eslint-disable react/prefer-stateless-function */
 class Header extends Component {
   render() {
     return (

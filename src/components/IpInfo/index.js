@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { InfoWrapper } from './styled';
+import InfoWrapper from './styled';
+
+/* eslint-disable react/prefer-stateless-function */
 
 class InputInfo extends Component {
   render() {
-    const { city_rus, country_rus, region_rus, zip_code } = this.props.ipInfo;
+    const {
+      city_rus, country_rus, region_rus, zip_code,
+    } = this.props.ipInfo;
     return (
       <InfoWrapper>
         <table>
@@ -12,7 +16,7 @@ class InputInfo extends Component {
               <th colSpan="2">
                 <h3>Информация о ip-адресе</h3>
               </th>
-              </tr>        
+            </tr>
             <tr>
               <td>Город</td>
               <td>{city_rus}</td>
